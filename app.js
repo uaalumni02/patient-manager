@@ -35,7 +35,7 @@ app.get('/api/allData', (req, res) => {
         db.collection('patientInformation').find({}).toArray(function (err, result) {
             if (err) throw err;
             return res.status(200)
-            .json(result);
+                .json(result);
             db.close();
         });
     });
@@ -51,9 +51,24 @@ app.post('/api/add', (req, res) => {
         collection.insert(patientInfo, function (err, result) {
             if (err) { throw err; }
             db.close();
-            res.send('Information Updated');
+            res.send('Information Added');
         });
     });
+});
+
+//remove docs from the db; based on name query /?q=
+
+app.post('/api/remove', (req, res) => {
+    mongoose.connect(DB_URL, function(err, db) {
+        var query = req.query.q;
+        if (err) throw err;
+        var myquery = { Name: '' + query };
+        db.collection("patientInformation").remove(myquery, function(err, obj) {
+          if (err) throw err;
+          console.log(obj.result.n + " document(s) deleted");
+          db.close();
+        });
+      });
 });
 
 app.listen(3000, () => console.log('server is running'));
