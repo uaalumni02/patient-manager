@@ -71,4 +71,21 @@ app.post('/api/remove', (req, res) => {
       });
 });
 
+//update documents by searhing by name /?q=
+
+app.post('/api/update', (req, res) => {
+mongoose.connect(DB_URL, function(err, db) {
+    if (err) throw err;
+    var query = req.query.q;
+    var myquery = { Name: '' + query };
+    var newvalues = { $set: {Name: req.body.Name, Email: req.body.Email, Phone: req.body.Phone, Address: req.body.Address, Medication: req.body.Medication, Diagnosis: req.body.Diagnosis, AdditionalInfo: req.body.AdditionalInfo } };
+   console.log(newvalues)
+    db.collection("patientInformation").updateMany(myquery, newvalues, function(err, res) {
+      if (err) throw err;
+      console.log("1 document updated");
+      db.close();
+    });
+  });
+});
+
 app.listen(3000, () => console.log('server is running'));
