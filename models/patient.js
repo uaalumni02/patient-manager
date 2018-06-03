@@ -1,14 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var patientInformation = new Schema({
-    Name: String,
-    Email: String,
-    Phone: String,
-    Address: String,
-    Medication: String,
-    Diagnosis: String,
-    AdditionalInfo: String,
+var patientInformationSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    name: String,
+    email: String,
+    phone: String,
+    address: String,
+    medication: String,
+    diagnosis: String,
+    additionalInfo: String,
 });
 
-module.exports = mongoose.model('patientInformation', patientInformation);
+module.exports = mongoose.model('PatientInformation', patientInformationSchema);

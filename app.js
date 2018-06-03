@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var app = express();
 
 //request models
-var patient = require('./models/patient');
+var PatientInformation = require('./models/patient');
 
 var DB_URL = process.env.MONGO_URL;
 
@@ -29,63 +29,104 @@ app.get('/', (req, res) => {
 //shows all data in the db
 
 app.get('/api/allData', (req, res) => {
-    mongoose.connect(DB_URL, function (err, db) {
-        if (err) throw err;
-        var collection = db.collection('patientInformation');
-        db.collection('patientInformation').find({}).toArray(function (err, result) {
-            if (err) throw err;
-            return res.status(200)
-                .json(result);
-            db.close();
+    PatientInformation.find()
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
         });
+});
+
+// Insert JSON straight into MongoDB
+
+app.post('/api/add', (req, res, next) => {
+    var patientInformation = new PatientInformation({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        address: req.body.address,
+        medication: req.body.medication,
+        diagnosis: req.body.diagnosis,
+        additionalInfo: req.body.additionalInfo,
     });
-
-});
-
-app.post('/api/add', (req, res) => {
-    // Insert JSON straight into MongoDB
-    mongoose.connect(DB_URL, function (err, db) {
-        if (err) { throw err; }
-        var collection = db.collection('patientInformation');
-        var patientInfo = { Name: req.body.Name, Email: req.body.Email, Phone: req.body.Phone, Address: req.body.Address, Medication: req.body.Medication, Diagnosis: req.body.Diagnosis, AdditionalInfo: req.body.AdditionalInfo };
-        collection.insert(patientInfo, function (err, result) {
-            if (err) { throw err; }
-            db.close();
-            res.send('Information Added');
-        });
+    patientInformation
+        .save()
+        .then(result => {
+            console.log(result);
+        })
+        .catch(err => console.log(err));
+    res.status(201).json({
+        message: 'added to database',
+        updatedPatient: patientInformation
     });
 });
 
-//remove docs from the db; based on name query /?q=
+//search DB by id
 
-app.post('/api/remove', (req, res) => {
-    mongoose.connect(DB_URL, function(err, db) {
-        var query = req.query.q;
-        if (err) throw err;
-        var myquery = { Name: '' + query };
-        db.collection("patientInformation").remove(myquery, function(err, obj) {
-          if (err) throw err;
-          console.log(obj.result.n + " document(s) deleted");
-          db.close();
+app.get('/api/search', (req, res, next) => {
+    var id = req.query.q;
+    PatientInformation.findById(id)
+        .exec()
+        .then(doc => {
+            console.log("from database", doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({ message: "No valid ID entered" });
+
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err })
         });
-      });
 });
 
-//update documents by searhing by name /?q=
 
-app.post('/api/update', (req, res) => {
-mongoose.connect(DB_URL, function(err, db) {
-    if (err) throw err;
+//remove docs from the db; based on name query localhost:3000/enter name to remove
+
+app.delete('/:removeData', (req, res) => {
+    var name = req.params.removeData;
+    PatientInformation.remove({ name: name })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+//update data query by name /?q=
+
+app.patch('/:updateData', (req, res) => {
     var query = req.query.q;
-    var myquery = { Name: '' + query };
-    var newvalues = { $set: {Name: req.body.Name, Email: req.body.Email, Phone: req.body.Phone, Address: req.body.Address, Medication: req.body.Medication, Diagnosis: req.body.Diagnosis, AdditionalInfo: req.body.AdditionalInfo } };
-   console.log(newvalues)
-    db.collection("patientInformation").updateMany(myquery, newvalues, function(err, res) {
-      if (err) throw err;
-      console.log("1 document updated");
-      db.close();
-    });
-  });
+    var myquery = { name: '' + query };
+    var newvalues = { $set: { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo } };
+    console.log(newvalues)
+    PatientInformation.update(myquery, newvalues)
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+
 });
+
 
 app.listen(3000, () => console.log('server is running'));
