@@ -9,6 +9,7 @@ var PatientInformation = require('./models/patient');
 
 var DB_URL = process.env.MONGO_URL;
 
+
 // Connect to mongoose
 mongoose.connect(DB_URL, (err) => {
     if (err)
@@ -25,8 +26,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.send('Please use routes for application access');
 });
-
-//shows all data in the db
 
 app.get('/api/allData', (req, res) => {
     PatientInformation.find()
@@ -127,6 +126,7 @@ app.patch('/:updateData', (req, res) => {
         });
 
 });
+
 
 
 app.listen(3000, () => console.log('server is running'));
