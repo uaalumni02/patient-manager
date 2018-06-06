@@ -33,7 +33,6 @@ app.get('/api/patient', (req, res) => {
     PatientInformation.find()
         .exec()
         .then(docs => {
-            console.log(docs);
             res.status(200).json(docs);
         })
         .catch(err => {
@@ -60,7 +59,6 @@ app.post('/api/patient', (req, res, next) => {
     patientInformation
         .save()
         .then(result => {
-            console.log(result);
         })
         .catch(err => console.log(err));
     res.status(201).json({
@@ -93,7 +91,7 @@ app.get('/api/patient/:id', (req, res, next) => {
 
 //remove docs from the db; based on name query localhost:3000/enter name to remove
 
-app.delete('/:removeData', (req, res) => {
+app.delete('/api/patient/:id', (req, res) => {
     var name = req.params.removeData;
     PatientInformation.remove({ name: name })
         .exec()
@@ -113,7 +111,6 @@ app.delete('/:removeData', (req, res) => {
 app.patch('/api/patient/:id', (req, res) => {
     var id = req.params.patientId;
     var updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
-    console.log(updateOps)
     PatientInformation.update({ $set: updateOps })
         .exec()
         .then(result => {
