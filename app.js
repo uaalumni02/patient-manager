@@ -27,7 +27,9 @@ app.get('/', (req, res) => {
     res.send('Please use routes for application access');
 });
 
-app.get('/api/allData', (req, res) => {
+//shows all data
+
+app.get('/api/patient', (req, res) => {
     PatientInformation.find()
         .exec()
         .then(docs => {
@@ -44,7 +46,7 @@ app.get('/api/allData', (req, res) => {
 
 // Insert JSON straight into MongoDB
 
-app.post('/api/add', (req, res, next) => {
+app.post('/api/patient', (req, res, next) => {
     var patientInformation = new PatientInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -106,14 +108,13 @@ app.delete('/:removeData', (req, res) => {
         });
 });
 
-//update data query by name /?q=
+//update patient information
 
-app.patch('/:updateData', (req, res) => {
-    var query = req.query.q;
-    var myquery = { name: '' + query };
-    var newvalues = { $set: { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo } };
-    console.log(newvalues)
-    PatientInformation.update(myquery, newvalues)
+app.patch('/api/patient/:id', (req, res) => {
+    var id = req.params.patientId;
+    var updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
+    console.log(updateOps)
+    PatientInformation.update({ $set: updateOps })
         .exec()
         .then(result => {
             res.status(200).json(result);
@@ -124,7 +125,6 @@ app.patch('/:updateData', (req, res) => {
                 error: err
             });
         });
-
 });
 
 
