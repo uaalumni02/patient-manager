@@ -71,7 +71,7 @@ app.post('/api/patient', (req, res, next) => {
 
 //search DB by id
 
-app.get('/api/search', (req, res, next) => {
+app.get('/api/patient/:id', (req, res, next) => {
     var id = req.query.q;
     PatientInformation.findById(id)
         .exec()
