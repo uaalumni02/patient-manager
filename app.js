@@ -89,14 +89,15 @@ app.get('/api/patient/:id', (req, res, next) => {
 });
 
 
-//remove docs from the db; based on name query localhost:3000/enter name to remove
+//remove docs from the db
 
 app.delete('/api/patient/:id', (req, res) => {
-    var name = req.params.removeData;
-    PatientInformation.remove({ name: name })
+    var id = req.params.id;
+    PatientInformation.findOneAndDelete({ '_id': id })
         .exec()
         .then(result => {
             res.status(200).json(result);
+            
         })
         .catch(err => {
             console.log(err);
@@ -106,7 +107,7 @@ app.delete('/api/patient/:id', (req, res) => {
         });
 });
 
-//update patient information
+// //update patient information
 
 app.patch('/api/patient/:id', (req, res) => {
     var id = req.params.patientId;
