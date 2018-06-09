@@ -6,6 +6,7 @@ var app = express();
 
 //request models
 var PatientInformation = require('./models/patient');
+var AppointmentInformation = require('./models/appointment');
 
 var DB_URL = process.env.MONGO_URL;
 
@@ -148,6 +149,27 @@ app.patch('/api/patient/:id', (req, res) => {
         });
 });
 
+//add appt data to db
+
+app.post('/api/patient/appointment', (req, res, next) => {
+    var appointmentInformation = new AppointmentInformation({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        attendees: req.body.attendees,
+        location: req.body.location,
+        date: req.body.date,
+        time: req.body.time,
+    });
+    appointmentInformation
+        .save()
+        .then(result => {
+        })
+        .catch(err => console.log(err));
+    res.status(201).json({
+        message: 'added to database',
+        updatedAppointment: appointmentInformation
+    });
+});
 
 
 app.listen(3000, () => console.log('server is running'));
