@@ -131,7 +131,7 @@ app.delete('/api/patient/:id', (req, res) => {
         });
 });
 
-// //update patient information
+ //update patient information
 
 app.patch('/api/patient/:id', (req, res) => {
     var id = req.params.patientId;
@@ -151,7 +151,7 @@ app.patch('/api/patient/:id', (req, res) => {
 
 //add appt data to db
 
-app.post('/api/patient/appointment', (req, res, next) => {
+app.post('/api/appointment', (req, res, next) => {
     var appointmentInformation = new AppointmentInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -170,6 +170,41 @@ app.post('/api/patient/appointment', (req, res, next) => {
         updatedAppointment: appointmentInformation
     });
 });
+
+//show all appts
+app.get('/api/appointment', (req, res) => {
+    AppointmentInformation.find()
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+
+//update appointment info
+app.patch('/api/appointment/:id', (req, res) => {
+    var id = req.params.patientId;
+    var updateAppt = { name: req.body.name, attendees: req.body.attendees, location: req.body.location, date: req.body.date, time: req.body.time };
+    AppointmentInformation.update({ $set: updateAppt })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+
 
 
 app.listen(3000, () => console.log('server is running'));
