@@ -4,7 +4,7 @@ var patientInformationSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: String,
     email: String,
-    phone: { type: Number, min: 7, max: 7 },
+    phone: String,
     address: String,
     medication: String,
     diagnosis: String,
