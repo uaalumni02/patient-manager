@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 const router = express.Router();
 
-//request models
+//request model
 var PatientInformation = require('../models/patient');
 
 //shows all data
