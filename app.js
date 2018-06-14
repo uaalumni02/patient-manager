@@ -7,9 +7,12 @@ var app = express();
 //request models
 var PatientInformation = require('./models/patient');
 var AppointmentInformation = require('./models/appointment');
+var UserInformation = require('./models/user');
 
+//importing routes
 var patientRoutes = require('./routes/patient.route');
 var appointmentRoutes = require('./routes/appointment.route');
+var userRoutes = require('./routes/user.route');
 
 var DB_URL = process.env.MONGO_URL;
 
@@ -26,8 +29,10 @@ var bodyParser = require('body-parser');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//middleware to utilize routes
 app.use('/api/patient', patientRoutes);
 app.use('/api/appointment', appointmentRoutes);
+app.use('/api/user', userRoutes);
 
 
 app.get('/', (req, res) => {
