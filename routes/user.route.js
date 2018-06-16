@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
@@ -70,6 +71,7 @@ router.post('/login', (req, res, next) => {
                     });
                 }
                 if (result) {
+                    
                     return res.status(200).json({
                         message: 'auth successful'
                     });
