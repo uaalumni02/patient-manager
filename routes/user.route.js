@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
     User.find({ user: req.body.user })
         .exec()
         .then(user => {
-            if (user.length >=1 ) {
+            if (user.length >= 1) {
                 return res.status(409).json({
                     message: 'user name exist'
                 });
@@ -53,6 +53,41 @@ router.post('/', (req, res, next) => {
 
 });
 
+router.post('/login', (req, res, next) => {
+    User.find({ user: req.body.user })
+        .exec()
+        .then(user => {
+            if (user.length < 1) {
+                return res.status(401).json({
+                    message: 'auth failed'
+                });
+
+            }
+            bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+                if (err) {
+                    return res.status(401).json({
+                        message: 'auth failed'
+                    });
+                }
+                if (result) {
+                    return res.status(200).json({
+                        message: 'auth successful'
+                    });
+                }
+                res.status(401).json({
+                    message: 'auth failed'
+                });
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+
 //delete user
 router.delete('/:id', (req, res) => {
     var id = req.params.id;
@@ -60,7 +95,7 @@ router.delete('/:id', (req, res) => {
         .exec()
         .then(result => {
             res.status(200).json(result);
-            
+
         })
         .catch(err => {
             console.log(err);
