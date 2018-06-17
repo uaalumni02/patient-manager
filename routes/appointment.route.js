@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ var AppointmentInformation = require('../models/appointment');
 
 //add appt data to db
 
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
     var appointmentInformation = new AppointmentInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -46,7 +47,7 @@ router.get('/', (req, res) => {
 
 
 //update appointment info
-router.patch('/:id', (req, res) => {
+router.patch('/:id', checkAuth, (req, res) => {
     var id = req.params.patientId;
     var updateAppt = { name: req.body.name, attendees: req.body.attendees, location: req.body.location, date: req.body.date, time: req.body.time };
     AppointmentInformation.update({ $set: updateAppt })
@@ -64,7 +65,7 @@ router.patch('/:id', (req, res) => {
 
 
 //delete appt from the DB
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkAuth, (req, res) => {
     var id = req.params.id;
     AppointmentInformation.findOneAndDelete({ '_id': id })
         .exec()

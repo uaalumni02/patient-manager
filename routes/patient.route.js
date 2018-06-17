@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.get('/', (req, res) => {
 
 // Insert JSON straight into MongoDB
 
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
     var patientInformation = new PatientInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -69,7 +70,7 @@ router.get('/:id', (req, res, next) => {
 
 //remove docs from the db
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkAuth, (req, res) => {
     var id = req.params.id;
     PatientInformation.findOneAndDelete({ '_id': id })
         .exec()
@@ -87,7 +88,7 @@ router.delete('/:id', (req, res) => {
 
  //update patient information
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', checkAuth, (req, res) => {
     var id = req.params.patientId;
     var updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
     PatientInformation.update({ $set: updateOps })
