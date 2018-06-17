@@ -71,9 +71,19 @@ router.post('/login', (req, res, next) => {
                     });
                 }
                 if (result) {
-                    
+                   var token = jwt.sign(
+                       {
+                        username:user[0].username,
+                        userId:user[0]._id
+                    },
+                     process.env.JWT_KEY, 
+                     {
+                         expiresIn: '1h'
+                     }
+                    );
                     return res.status(200).json({
-                        message: 'auth successful'
+                        message: 'auth successful',
+                        token:token
                     });
                 }
                 res.status(401).json({
