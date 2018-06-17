@@ -11,7 +11,7 @@ var User = require('../models/user');
 
 //create user
 router.post('/', (req, res, next) => {
-    User.find({ user: req.body.user })
+    User.find({ username: req.body.username })
         .exec()
         .then(user => {
             if (user.length >= 1) {
