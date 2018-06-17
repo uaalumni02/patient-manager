@@ -13,6 +13,7 @@ var UserInformation = require('./models/user');
 var patientRoutes = require('./routes/patient.route');
 var appointmentRoutes = require('./routes/appointment.route');
 var userRoutes = require('./routes/user.route');
+var routes = require("./controllers/patient");
 
 var DB_URL = process.env.MONGO_URL;
 
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/patient', patientRoutes);
 app.use('/api/appointment', appointmentRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/patient', routes);
 
 
 app.get('/', (req, res) => {

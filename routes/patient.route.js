@@ -1,27 +1,13 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var checkAuth = require('../middleware/check-auth');
+var app = express();
 
 const router = express.Router();
 
 //request model
 var PatientInformation = require('../models/patient');
 
-//shows all data
-
-router.get('/', (req, res) => {
-    PatientInformation.find()
-        .exec()
-        .then(docs => {
-            res.status(200).json(docs);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
 
 // Insert JSON straight into MongoDB
 
