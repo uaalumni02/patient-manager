@@ -7,6 +7,9 @@ const router = express.Router();
 //request model
 var AppointmentInformation = require('../models/appointment');
 
+// import controller
+var patientController = require('../controllers/appointment');
+
 
 //add appt data to db
 
