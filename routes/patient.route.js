@@ -15,31 +15,9 @@ var patientController = require('../controllers/patient');
 router.get('/', patientController.get_all_patients);
 
 // Insert JSON straight into MongoDB
-
-router.post('/', checkAuth, (req, res, next) => {
-    var patientInformation = new PatientInformation({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone,
-        address: req.body.address,
-        medication: req.body.medication,
-        diagnosis: req.body.diagnosis,
-        additionalInfo: req.body.additionalInfo,
-    });
-    patientInformation
-        .save()
-        .then(result => {
-        })
-        .catch(err => console.log(err));
-    res.status(201).json({
-        message: 'added to database',
-        updatedPatient: patientInformation
-    });
-});
+router.post('/', checkAuth, patientController.add_patients )
 
 //search DB by id
-
 router.get('/:id', (req, res, next) => {
     var id = req.params.id;
     PatientInformation.findById({ '_id': id })
