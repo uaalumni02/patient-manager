@@ -8,6 +8,11 @@ const router = express.Router();
 //request model
 var PatientInformation = require('../models/patient');
 
+// import controller
+var patientController = require('../controllers/patient');
+
+//shows all data
+router.get('/', patientController.get_all_patients);
 
 // Insert JSON straight into MongoDB
 

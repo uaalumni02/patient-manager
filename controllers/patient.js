@@ -7,7 +7,7 @@ var router = express.Router();
 
 //shows all data
 
-router.get('/', (req, res) => {
+router.get_all_patients =('/', (req, res) => {
     PatientInformation.find()
         .exec()
         .then(docs => {
