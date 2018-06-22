@@ -21,23 +21,9 @@ router.post('/', checkAuth, patientController.add_patients);
 router.get('/:id', patientController.search_patients);
 
 
-//remove docs from the db
+//remove patient from the db
+router.delete('/:id', checkAuth, patientController.remove_patient);
 
-router.delete('/:id', checkAuth, (req, res) => {
-    var id = req.params.id;
-    PatientInformation.findOneAndDelete({ '_id': id })
-        .exec()
-        .then(result => {
-            res.status(200).json(result);
-            
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
 
  //update patient information
 

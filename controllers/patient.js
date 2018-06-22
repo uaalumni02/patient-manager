@@ -64,6 +64,22 @@ router.search_patients = ('/:id', (req, res, next) => {
         });
 });
 
+//remove patient from the db
+router.remove_patient = ('/:id', (req, res) => {
+    var id = req.params.id;
+    PatientInformation.findOneAndDelete({ '_id': id })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+            
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
 
 
 module.exports = router;
