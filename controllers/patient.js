@@ -81,5 +81,23 @@ router.remove_patient = ('/:id', (req, res) => {
         });
 });
 
+//update patient information
+router.update_patient = ('/:id', (req, res) => {
+    var id = req.params.patientId;
+    var updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
+    PatientInformation.update({ $set: updateOps })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+
 
 module.exports = router;
