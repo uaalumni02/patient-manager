@@ -15,27 +15,11 @@ var patientController = require('../controllers/patient');
 router.get('/', patientController.get_all_patients);
 
 // Insert JSON straight into MongoDB
-router.post('/', checkAuth, patientController.add_patients )
+router.post('/', checkAuth, patientController.add_patients);
 
 //search DB by id
-router.get('/:id', (req, res, next) => {
-    var id = req.params.id;
-    PatientInformation.findById({ '_id': id })
-        .exec()
-        .then(doc => {
-            console.log("from database", doc);
-            if (doc) {
-                res.status(200).json(doc);
-            } else {
-                res.status(404).json({ message: "No valid ID entered" });
+router.get('/:id', patientController.search_patients);
 
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: err })
-        });
-});
 
 //remove docs from the db
 

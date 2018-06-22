@@ -44,6 +44,25 @@ router.add_patients = ('/', (req, res, next) => {
     });
 });
 
+//search by ID
+router.search_patients = ('/:id', (req, res, next) => {
+    var id = req.params.id;
+    PatientInformation.findById({ '_id': id })
+        .exec()
+        .then(doc => {
+            console.log("from database", doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({ message: "No valid ID entered" });
+
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err })
+        });
+});
 
 
 
