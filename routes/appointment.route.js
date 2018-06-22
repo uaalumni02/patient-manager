@@ -8,30 +8,11 @@ const router = express.Router();
 var AppointmentInformation = require('../models/appointment');
 
 // import controller
-var patientController = require('../controllers/appointment');
+var appointmentController = require('../controllers/appointment');
 
 
 //add appt data to db
-
-router.post('/', checkAuth, (req, res, next) => {
-    var appointmentInformation = new AppointmentInformation({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        attendees: req.body.attendees,
-        location: req.body.location,
-        date: req.body.date,
-        time: req.body.time,
-    });
-    appointmentInformation
-        .save()
-        .then(result => {
-        })
-        .catch(err => console.log(err));
-    res.status(201).json({
-        message: 'added to database',
-        updatedAppointment: appointmentInformation
-    });
-});
+router.post('/', checkAuth, appointmentController.add_appointment);
 
 //show all appts
 router.get('/', (req, res) => {
