@@ -31,6 +31,38 @@ router.add_appointment = ('/', (req, res, next) => {
     });
 });
 
+//show all appts
+router.all_appointments = ('/', (req, res) => {
+    AppointmentInformation.find()
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
+//update appointment info
+router.update_appointment_info = ('/:id', (req, res) => {
+    var id = req.params.patientId;
+    var updateAppt = { name: req.body.name, attendees: req.body.attendees, location: req.body.location, date: req.body.date, time: req.body.time };
+    AppointmentInformation.update({ $set: updateAppt })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
 
 
 

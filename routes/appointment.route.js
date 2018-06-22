@@ -15,38 +15,11 @@ var appointmentController = require('../controllers/appointment');
 router.post('/', checkAuth, appointmentController.add_appointment);
 
 //show all appts
-router.get('/', (req, res) => {
-    AppointmentInformation.find()
-        .exec()
-        .then(docs => {
-            res.status(200).json(docs);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
+router.get('/', appointmentController.all_appointments);
 
 
 //update appointment info
-router.patch('/:id', checkAuth, (req, res) => {
-    var id = req.params.patientId;
-    var updateAppt = { name: req.body.name, attendees: req.body.attendees, location: req.body.location, date: req.body.date, time: req.body.time };
-    AppointmentInformation.update({ $set: updateAppt })
-        .exec()
-        .then(result => {
-            res.status(200).json(result);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
+router.patch('/:id', checkAuth, appointmentController.update_appointment_info);
 
 //delete appt from the DB
 router.delete('/:id', checkAuth, (req, res) => {
