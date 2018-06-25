@@ -7,7 +7,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 //shows all data
-router.get_all_patients =('/', (req, res) => {
+router.get_all_patients = ('/', (req, res) => {
     PatientInformation.find()
         .exec()
         .then(docs => {
