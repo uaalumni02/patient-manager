@@ -102,8 +102,22 @@ router.logIn = ('/login', (req, res, next) => {
         });
 });
 
+//delete user
+router.remove_user = ('/:id', (req, res) => {
+    var id = req.params.id;
+    User.findOneAndDelete({ '_id': id })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
 
-
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
 
 
 module.exports = router;
