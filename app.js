@@ -15,6 +15,7 @@ var appointmentRoutes = require('./routes/appointment.route');
 var userRoutes = require('./routes/user.route');
 var routes = require("./controllers/patient");
 
+
 var DB_URL = process.env.MONGO_URL;
 
 
