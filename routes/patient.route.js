@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var checkAuth = require('../middleware/check-auth');
 var app = express();
 
-const router = express.Router();
+var router = express.Router();
 
 //request model
 var PatientInformation = require('../models/patient');
