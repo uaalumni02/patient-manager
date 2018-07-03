@@ -1,4 +1,3 @@
-
 var express = require("express");
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -67,7 +66,7 @@ router.logIn = ('/login', (req, res, next) => {
                 });
 
             }
-            bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+            bcrypt.hash(req.body.password, user[0].password, (err, result) => {
                 if (err) {
                     return res.status(401).json({
                         message: 'auth failed'
