@@ -57,7 +57,7 @@ router.createUser = ('/', (req, res, next) => {
 
 //user login
 router.logIn = ('/login', (req, res, next) => {
-    User.find({ user: req.body.user })
+    User.find({ username: req.body.username })
         .exec()
         .then(user => {
             if (user.length < 1) {
