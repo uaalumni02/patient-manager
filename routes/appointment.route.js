@@ -14,7 +14,7 @@ var appointmentController = require('../controllers/appointment');
 router.post('/', checkAuth, appointmentController.add_appointment);
 
 //show all appts
-router.get('/', appointmentController.all_appointments);
+router.get('/', checkAuth, appointmentController.all_appointments);
 
 //update appointment info
 router.patch('/:id', checkAuth, appointmentController.update_appointment_info);

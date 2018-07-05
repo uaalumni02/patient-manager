@@ -12,13 +12,13 @@ var PatientInformation = require('../models/patient');
 var patientController = require('../controllers/patient');
 
 //shows all data
-router.get('/', patientController.get_all_patients);
+router.get('/', checkAuth, patientController.get_all_patients);
 
 // Insert JSON straight into MongoDB
 router.post('/', checkAuth, patientController.add_patients);
 
 //search DB by id
-router.get('/:id', patientController.search_patients);
+router.get('/:id', checkAuth, patientController.search_patients);
 
 
 //remove patient from the db
