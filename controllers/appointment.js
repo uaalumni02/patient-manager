@@ -1,4 +1,4 @@
-var PatientInformation = require('../models/appointment');
+var PatientInformation = require('../models/patient');
 
 var express = require("express");
 
@@ -13,8 +13,7 @@ var AppointmentInformation = require('../models/appointment');
 //add appts
 router.add_appointment = ('/', (req, res, next) => {
     var appointmentInformation = new AppointmentInformation({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
+        patientId: req.body.patientId,
         attendees: req.body.attendees,
         location: req.body.location,
         date: req.body.date,
@@ -23,12 +22,22 @@ router.add_appointment = ('/', (req, res, next) => {
     appointmentInformation
         .save()
         .then(result => {
+            PatientInformation.findById(result.patientId)
+            .exec()
+            .then(patientData => {
+                console.log(patientData)
+                res.status(201).json({
+                    message: 'added to database',
+                    updatedAppointment: appointmentInformation,
+                    patient: patientData
+                });
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
         })
         .catch(err => console.log(err));
-    res.status(201).json({
-        message: 'added to database',
-        updatedAppointment: appointmentInformation
-    });
+   
 });
 
 //show all appts
@@ -69,14 +78,35 @@ router.remove_appointment = ('/:id', (req, res) => {
     AppointmentInformation.findOneAndDelete({ '_id': id })
         .exec()
         .then(result => {
-            res.status(200).json(result);
-            
+            res.status(200).json({
+                message: 'removed from database',
+            });
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({
                 error: err
             });
+        });
+});
+
+//search appt by ID
+router.search_appointment = ('/:id', (req, res, next) => {
+    var id = req.params.id;
+    AppointmentInformation.findById({ '_id': id })
+        .exec()
+        .then(doc => {
+            console.log("from database", doc);
+            if (doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(404).json({ message: "No valid ID entered" });
+
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err })
         });
 });
 

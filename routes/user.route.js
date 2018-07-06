@@ -1,7 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
 var checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
@@ -13,13 +12,13 @@ var User = require('../models/user');
 var userController = require('../controllers/user');
 
 //create user
-router.post('/', checkAuth, userController.createUser);
+router.post('/', userController.createUser);
 
 //user login
-router.post('/login', checkAuth, userController.logIn);
+router.post('/login', userController.logIn);
 
 //delete user
-router.delete('/:id', checkAuth, userController.remove_user);
+router.delete('/:id', userController.remove_user);
 
 
 module.exports = router;

@@ -22,6 +22,9 @@ router.patch('/:id', checkAuth, appointmentController.update_appointment_info);
 //delete appt from the DB
 router.delete('/:id', checkAuth, appointmentController.remove_appointment);
 
+//search appt by ID
+router.get('/:id', checkAuth, appointmentController.search_appointment);
+
 
 
 
