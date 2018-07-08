@@ -33,8 +33,6 @@ router.add_patients = ('/', (req, res, next) => {
         diagnosis: req.body.diagnosis,
         additionalInfo: req.body.additionalInfo,
     });
-    const { name, email, phone, address, medication, diagnosis,additionalInfo } = req.body;
-    if (name && email && phone && address && medication && diagnosis && additionalInfo) {
     patientInformation
         .save()
         .then(result => {
@@ -44,9 +42,7 @@ router.add_patients = ('/', (req, res, next) => {
         message: 'added to database',
         updatedPatient: patientInformation
     });
-} else {
-    return res.status(400).send('Please make sure proper data is entered');
-}
+
 });
 
 //search by ID
