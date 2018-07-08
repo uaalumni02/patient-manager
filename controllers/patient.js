@@ -22,36 +22,7 @@ router.get_all_patients = ('/', (req, res) => {
 });
 
 // Insert JSON straight into MongoDB
-router.add_patients = ('/', (req, res, next) => {
-    const isValidPatientName = (name) => {
-        var regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
-        return regExp.test(name)
-      }
-      const isValidEmail = (email) => {
-        var regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,7})$/i;
-        return regExp.test(email)
-      }
-      const isValidPhoneNumber = (phone) => {
-        var regExp = /^[0-9+\(\)#\.\s\/ext-]+$/i;
-        return regExp.test(phone)
-      }
-      const isValidAddress = (address) => {
-        var regExp = /^(?=.*\d)[a-zA-Z\s\d\/]+$/i;
-        return regExp.test(address)
-      }
-      const isValidMedication = (medication) => {
-        var regExp = /^[a-z]{4,}$/i;
-        return regExp.test(medication)
-      }
-      const isValidDiagnosis = (diagnosis) => {
-        var regExp = /^[a-z]{3,}$/i;
-        return regExp.test(diagnosis)
-      }
-      const isValidAdditionalInfo = (additionalInfo) => {
-        var regExp = /^[a-z]{2,}$/i;
-        return regExp.test(additionalInfo)
-      }
-    
+router.add_patients = ('/', (req, res, next) => { 
     var patientInformation = new PatientInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -63,7 +34,7 @@ router.add_patients = ('/', (req, res, next) => {
         additionalInfo: req.body.additionalInfo,
     });
     const { name, email, phone, address, medication, diagnosis,additionalInfo } = req.body;
-    if (isValidPatientName(name) && isValidEmail(email) && isValidPhoneNumber(phone) && isValidAddress(address) && isValidMedication(medication) && isValidDiagnosis(diagnosis) && isValidAdditionalInfo(additionalInfo)) {
+    if (name && email && phone && address && medication && diagnosis && additionalInfo) {
     patientInformation
         .save()
         .then(result => {
