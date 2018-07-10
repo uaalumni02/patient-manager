@@ -11,7 +11,7 @@ const isValidPatientName = (name) => {
     return regExp.test(email)
   };
   const isValidPhoneNumber = (phone) => {
-    var regExp = /^[0-9+\(\)#\.\s\/ext-]+$/i;
+    var regExp = /^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/i;
     return regExp.test(phone)
   };
   const isValidAddress = (address) => {

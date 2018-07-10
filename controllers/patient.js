@@ -22,7 +22,7 @@ router.get_all_patients = ('/', (req, res) => {
 });
 
 // Insert JSON straight into MongoDB
-router.add_patients = ('/', (req, res, next) => { 
+router.add_patients = ('/', (req, res, next) => {
     var patientInformation = new PatientInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -36,13 +36,18 @@ router.add_patients = ('/', (req, res, next) => {
     patientInformation
         .save()
         .then(result => {
+            if (result) {
+                res.status(201).json({
+                    Message: 'Added to databse'
+                })
+            } else {
+                res.status(404).json({ Message: "Please enter valid information" });
+            }
         })
-        .catch(err => console.log(err));
-    res.status(201).json({
-        message: 'added to database',
-        updatedPatient: patientInformation
-    });
-
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err })
+        });
 });
 
 //search by ID
@@ -72,7 +77,7 @@ router.remove_patient = ('/:id', (req, res) => {
         .exec()
         .then(result => {
             res.status(200).json(result);
-            
+
         })
         .catch(err => {
             console.log(err);
