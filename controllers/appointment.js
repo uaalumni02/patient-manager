@@ -6,38 +6,41 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 
+var moment = require('moment');
+
 //request model
 var AppointmentInformation = require('../models/appointment');
 
-
 //add appts
 router.add_appointment = ('/', (req, res, next) => {
+    var currentdate = req.body.appointmentDate;
+    var appointmentTimestamp = moment(currentdate, 'YYYY-MM-DD hh:mmA').unix();
+
     var appointmentInformation = new AppointmentInformation({
         patientId: req.body.patientId,
         attendees: req.body.attendees,
         location: req.body.location,
-        date: req.body.date,
-        time: req.body.time,
+        appointmentDate: appointmentTimestamp,
     });
     appointmentInformation
         .save()
         .then(result => {
             PatientInformation.findById(result.patientId)
-            .exec()
-            .then(patientData => {
-                console.log(patientData)
-                res.status(201).json({
-                    message: 'added to database',
-                    updatedAppointment: appointmentInformation,
-                    patient: patientData
-                });
-            })
-            .catch((err) => {
-                console.log(err.message)
-            })
+                .exec()
+                .then(patientData => {
+                    console.log(patientData)
+                    res.status(201).json({
+                        message: 'added to database',
+                        updatedAppointment: appointmentInformation,
+                        patient: patientData
+                    });
+                })
+                .catch((err) => {
+                    console.log(err.message)
+                })
         })
         .catch(err => console.log(err));
-   
+
 });
 
 //show all appts

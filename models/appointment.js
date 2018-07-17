@@ -33,9 +33,10 @@ var appointmentInformationSchema = mongoose.Schema({
         required: [true,'Location is required'],
         validate: [isValidPatientLocation, 'Please enter location'],
     },
-    date: {
+    appointmentDate: {
         type: Number,
         required: true
+        
     },
     
 });
