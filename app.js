@@ -1,20 +1,21 @@
 require('dotenv').config();
-var express = require('express');
-var bodyparser = require('body-parser');
-var mongoose = require('mongoose');
-var app = express();
+import express from 'express';
+import bodyparser from 'body-parser';
+import mongoose  from 'mongoose';
+const app = express();
 
-//request models
+//import models
 
-var PatientInformation = require('./models/patient');
-var AppointmentInformation = require('./models/appointment');
-var UserInformation = require('./models/user');
+import PatientInformation from './models/patient';
+import AppointmentInformation from './models/appointment';
+import UserInformation from './models/user';
 
-//importing routes
-var patientRoutes = require('./routes/patient.route');
-var appointmentRoutes = require('./routes/appointment.route');
-var userRoutes = require('./routes/user.route');
-var routes = require("./controllers/patient");
+//import routes
+
+import patientRoutes from './routes/patient.route';
+import appointmentRoutes  from './routes/appointment.route';
+import userRoutes from './routes/user.route';
+import routes from './controllers/patient';
 
 
 var DB_URL = process.env.MONGO_URL;
@@ -28,7 +29,7 @@ mongoose.connect(DB_URL, (err) => {
 });
 
 //middleware to parse request body
-var bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
