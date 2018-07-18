@@ -1,12 +1,12 @@
-var express = require("express");
-var router = express.Router();
-var mongoose = require('mongoose');
+import express from "express";
+const router = express.Router();
+import mongoose from 'mongoose';
 
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 //import model
-var User = require('../models/user');
+import User from '../models/user';
 
 
 
@@ -28,7 +28,7 @@ router.createUser = ('/', (req, res, next) => {
                     } else {
 
                     }
-                    var user = new User({
+                    const user = new User({
                         _id: new mongoose.Types.ObjectId(),
                         username: req.body.username,
                         password: hash
@@ -73,7 +73,7 @@ router.logIn = ('/login', (req, res, next) => {
                     });
                 }
                 if (result) {
-                   var token = jwt.sign(
+                   const token = jwt.sign(
                        {
                         username:user[0].username,
                         userId:user[0]._id
@@ -103,7 +103,7 @@ router.logIn = ('/login', (req, res, next) => {
 
 //delete user
 router.remove_user = ('/:id', (req, res) => {
-    var id = req.params.id;
+    const id = req.params.id;
     User.findOneAndDelete({ '_id': id })
         .exec()
         .then(result => {

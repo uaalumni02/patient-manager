@@ -1,22 +1,22 @@
-var PatientInformation = require('../models/patient');
+import PatientInformation from '../models/patient';
 
-var express = require("express");
+import express from "express";
 
-var router = express.Router();
+const router = express.Router();
 
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-var moment = require('moment');
+import moment from 'moment';
 
-//request model
-var AppointmentInformation = require('../models/appointment');
+//import model
+import AppointmentInformation from '../models/appointment';
 
 //add appts
 router.add_appointment = ('/', (req, res, next) => {
-    var currentdate = req.body.appointmentDate;
-    var appointmentTimestamp = moment(currentdate, 'YYYY-MM-DD hh:mmA').unix();
+    const currentdate = req.body.appointmentDate;
+    const appointmentTimestamp = moment(currentdate, 'YYYY-MM-DD hh:mmA').unix();
 
-    var appointmentInformation = new AppointmentInformation({
+    const appointmentInformation = new AppointmentInformation({
         patientId: req.body.patientId,
         attendees: req.body.attendees,
         location: req.body.location,
@@ -60,8 +60,8 @@ router.all_appointments = ('/', (req, res) => {
 
 //update appointment info
 router.update_appointment_info = ('/:id', (req, res) => {
-    var id = req.params.patientId;
-    var updateAppt = { name: req.body.name, attendees: req.body.attendees, location: req.body.location, date: req.body.date, time: req.body.time };
+    const id = req.params.patientId;
+    const updateAppt = { name: req.body.name, attendees: req.body.attendees, location: req.body.location, date: req.body.date, time: req.body.time };
     AppointmentInformation.update({ $set: updateAppt })
         .exec()
         .then(result => {
@@ -77,7 +77,7 @@ router.update_appointment_info = ('/:id', (req, res) => {
 
 //remove appointment
 router.remove_appointment = ('/:id', (req, res) => {
-    var id = req.params.id;
+    const id = req.params.id;
     AppointmentInformation.findOneAndDelete({ '_id': id })
         .exec()
         .then(result => {
@@ -95,7 +95,7 @@ router.remove_appointment = ('/:id', (req, res) => {
 
 //search appt by ID
 router.search_appointment = ('/:id', (req, res, next) => {
-    var id = req.params.id;
+    const id = req.params.id;
     AppointmentInformation.findById({ '_id': id })
         .exec()
         .then(doc => {

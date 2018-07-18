@@ -1,10 +1,10 @@
-var PatientInformation = require('../models/patient');
+import PatientInformation from '../models/patient';
 
-var express = require("express");
+import express from "express";
 
-var router = express.Router();
+const router = express.Router();
 
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 //shows all data
 router.get_all_patients = ('/', (req, res) => {
@@ -23,7 +23,7 @@ router.get_all_patients = ('/', (req, res) => {
 
 // Insert JSON straight into MongoDB
 router.add_patients = ('/', (req, res, next) => {
-    var patientInformation = new PatientInformation({
+    const patientInformation = new PatientInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         email: req.body.email,
@@ -52,7 +52,7 @@ router.add_patients = ('/', (req, res, next) => {
 
 //search by ID
 router.search_patients = ('/:id', (req, res, next) => {
-    var id = req.params.id;
+    const id = req.params.id;
     PatientInformation.findById({ '_id': id })
         .exec()
         .then(doc => {
@@ -72,7 +72,7 @@ router.search_patients = ('/:id', (req, res, next) => {
 
 //remove patient from the db
 router.remove_patient = ('/:id', (req, res) => {
-    var id = req.params.id;
+    const id = req.params.id;
     PatientInformation.findOneAndDelete({ '_id': id })
         .exec()
         .then(result => {
@@ -89,8 +89,8 @@ router.remove_patient = ('/:id', (req, res) => {
 
 //update patient information
 router.update_patient = ('/:id', (req, res) => {
-    var id = req.params.patientId;
-    var updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
+    const id = req.params.patientId;
+    const updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
     PatientInformation.update({ $set: updateOps })
         .exec()
         .then(result => {
