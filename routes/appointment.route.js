@@ -1,14 +1,14 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var checkAuth = require('../middleware/check-auth');
+import express from 'express';
+import mongoose from 'mongoose';
+import checkAuth from '../middleware/check-auth';
 
 const router = express.Router();
 
 //request model
-var AppointmentInformation = require('../models/appointment');
+import AppointmentInformation from '../models/appointment';
 
 // import controller
-var appointmentController = require('../controllers/appointment');
+import appointmentController from '../controllers/appointment';
 
 //add appt data to db
 router.post('/', checkAuth, appointmentController.add_appointment);

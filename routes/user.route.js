@@ -1,15 +1,15 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
-var checkAuth = require('../middleware/check-auth');
+import express from 'express';
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import checkAuth from '../middleware/check-auth';
 
 const router = express.Router();
 
-//request model
-var User = require('../models/user');
+//import model
+import User from '../models/user';
 
 // import controller
-var userController = require('../controllers/user');
+import userController from '../controllers/user';
 
 //create user
 router.post('/', userController.createUser);

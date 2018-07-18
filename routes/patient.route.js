@@ -1,15 +1,15 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var checkAuth = require('../middleware/check-auth');
-var app = express();
+import express from 'express';
+import mongoose from 'mongoose';
+import checkAuth from '../middleware/check-auth';
+const app = express();
 
-var router = express.Router();
+const router = express.Router();
 
-//request model
-var PatientInformation = require('../models/patient');
+//import model
+import PatientInformation from '../models/patient';
 
 // import controller
-var patientController = require('../controllers/patient');
+import patientController from '../controllers/patient';
 
 //shows all data
 router.get('/', checkAuth, patientController.get_all_patients);
