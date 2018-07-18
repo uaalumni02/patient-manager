@@ -1,33 +1,33 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 var patientInformationSchema = mongoose.Schema;
 
 const isValidPatientName = (name) => {
-    var regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
+    const regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
     return regExp.test(name)
   };
   const isValidEmail = (email) => {
-    var regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,7})$/i;
+    const regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,7})$/i;
     return regExp.test(email)
   };
   const isValidPhoneNumber = (phone) => {
-    var regExp = /^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/i;
+    const regExp = /^(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/i;
     return regExp.test(phone)
   };
   const isValidAddress = (address) => {
-    var regExp = /^(?=.*\d)[a-zA-Z\s\d\/]+$/i;
+    const regExp = /^(?=.*\d)[a-zA-Z\s\d\/]+$/i;
     return regExp.test(address)
   };
   const isValidMedication = (medication) => {
-    var regExp = /^[a-z]{4,}$/i;
+    const regExp = /^[a-z]{4,}$/i;
     return regExp.test(medication)
   };
   const isValidDiagnosis = (diagnosis) => {
-    var regExp = /^[a-z]{3,}$/i;
+    const regExp = /^[a-z]{3,}$/i;
     return regExp.test(diagnosis)
   };
   const isValidAdditionalInfo = (additionalInfo) => {
-    var regExp = /^[a-z]{2,}$/i;
+    const regExp = /^[a-z]{2,}$/i;
     return regExp.test(additionalInfo)
   };
   var patientInformationSchema = mongoose.Schema({
