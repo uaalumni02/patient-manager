@@ -1,25 +1,21 @@
-require('dotenv').config();
+import 'dotenv/config'
 import express from 'express';
 import bodyparser from 'body-parser';
 import mongoose  from 'mongoose';
-const app = express();
 
 //import models
-
 import PatientInformation from './models/patient';
 import AppointmentInformation from './models/appointment';
 import UserInformation from './models/user';
 
 //import routes
-
 import patientRoutes from './routes/patient.route';
 import appointmentRoutes  from './routes/appointment.route';
 import userRoutes from './routes/user.route';
 import routes from './controllers/patient';
 
-
-var DB_URL = process.env.MONGO_URL;
-
+const app = express();
+const DB_URL = process.env.MONGO_URL;
 
 // Connect to mongoose
 mongoose.connect(DB_URL, (err) => {
@@ -39,11 +35,8 @@ app.use('/api/appointment', appointmentRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/patient', routes);
 
-
 app.get('/', (req, res) => {
     res.send('Please use routes for application access');
 });
-
-
 
 app.listen(3000, () => console.log('server is running'));
