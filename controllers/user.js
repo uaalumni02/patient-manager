@@ -1,14 +1,12 @@
 import express from "express";
-const router = express.Router();
 import mongoose from 'mongoose';
-
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 //import model
 import User from '../models/user';
 
-
+const router = express.Router();
 
 //create user
 router.createUser = ('/', (req, res, next) => {
@@ -118,5 +116,5 @@ router.remove_user = ('/:id', (req, res) => {
         });
 });
 
+export default router;
 
-module.exports = router;
