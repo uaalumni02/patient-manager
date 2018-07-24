@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-module.exports = (req, res, next) => {
+const authChecker = (req, res, next) => {
     try {
         var token = req.headers.authorization.split(" ")[1];
         var decoded = jwt.verify(token,  process.env.JWT_KEY);
@@ -12,3 +12,5 @@ message: 'Auth failed'
     });
 }
 };
+
+export default authChecker;
