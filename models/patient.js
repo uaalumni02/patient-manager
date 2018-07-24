@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-var patientInformationSchema = mongoose.Schema;
 
 const isValidPatientName = (name) => {
     const regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
@@ -30,7 +29,7 @@ const isValidPatientName = (name) => {
     const regExp = /^[a-z]{2,}$/i;
     return regExp.test(additionalInfo)
   };
-  var patientInformationSchema = mongoose.Schema({
+  const patientInformationSchema = mongoose.Schema({
     
     _id: mongoose.Schema.Types.ObjectId,
     name: {

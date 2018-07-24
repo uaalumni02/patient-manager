@@ -1,25 +1,23 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-var appointmentInformationSchema = mongoose.Schema;
-
 const isValidAttendees = (attendees) => {
-    var regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
+    const regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
     return regExp.test(attendees)
   };
   const isValidPatientLocation = (location) => {
-    var regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
+    const regExp = /^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$/i
     return regExp.test(location)
   };
 
   const isValidPatientDateTime = (time) => {
-    var regExp = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/i
+    const regExp = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/i
     return regExp.test(time)
   };
 
-var appointmentInformationSchema = mongoose.Schema({
+const appointmentInformationSchema = mongoose.Schema({
     patientId: {
-        type: Schema.Types.ObjectId
+        // type: Schema.Types.ObjectId
     },
     attendees: {
         type: String,
