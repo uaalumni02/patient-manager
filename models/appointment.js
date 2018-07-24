@@ -41,4 +41,5 @@ var appointmentInformationSchema = mongoose.Schema({
     
 });
 
-module.exports = mongoose.model('AppointmentInformation', appointmentInformationSchema);
+export default mongoose.model('AppointmentInformation', appointmentInformationSchema);
+

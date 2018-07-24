@@ -74,6 +74,6 @@ const isValidPatientName = (name) => {
 
 
 
-module.exports = mongoose.model('PatientInformation', patientInformationSchema);
+export default mongoose.model('PatientInformation', patientInformationSchema);
 
 
