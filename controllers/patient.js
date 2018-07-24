@@ -36,10 +36,10 @@ router.addPatients = ('/', (req, res, next) => {
         .then(result => {
             if (result) {
                 res.status(201).json({
-                    Message: 'Added to databse'
+                    message: 'Added to databse'
                 })
             } else {
-                res.status(404).json({ Message: "Please enter valid information" });
+                res.status(404).json({ message: "Please enter valid information" });
             }
         })
         .catch(err => {

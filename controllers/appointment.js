@@ -57,7 +57,13 @@ router.allAppointments = ('/', (req, res) => {
 //update appointment info
 router.updateAppointmentInfo = ('/:id', (req, res) => {
     const id = req.params.patientId;
-    const updateAppt = { name: req.body.name, attendees: req.body.attendees, location: req.body.location, date: req.body.date, time: req.body.time };
+    const updateAppt = { 
+        name: req.body.name, 
+        attendees: req.body.attendees,
+         location: req.body.location, 
+         date: req.body.date, 
+         time: req.body.time 
+        };
     AppointmentInformation.update({ $set: updateAppt })
         .exec()
         .then(result => {
