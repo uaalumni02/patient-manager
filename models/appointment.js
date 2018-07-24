@@ -33,8 +33,7 @@ const appointmentInformationSchema = mongoose.Schema({
     },
     appointmentDate: {
         type: Number,
-        required: true
-        
+        required: true 
     },
     
 });

@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import express from 'express';
-import bodyparser from 'body-parser';
 import mongoose  from 'mongoose';
 
 //import models
@@ -24,8 +23,6 @@ mongoose.connect(DB_URL, (err) => {
     return console.log('Connection Successful')
 });
 
-//middleware to parse request body
-import bodyParser from 'body-parser';
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
