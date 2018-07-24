@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 
 const authChecker = (req, res, next) => {
     try {
-        var token = req.headers.authorization.split(" ")[1];
-        var decoded = jwt.verify(token,  process.env.JWT_KEY);
+        const token = req.headers.authorization.split(" ")[1];
+        const decoded = jwt.verify(token,  process.env.JWT_KEY);
         req.userData = decoded;
         next();
     } catch(error){
