@@ -1,21 +1,17 @@
-import PatientInformation from '../models/patient';
-
 import express from "express";
-
-const router = express.Router();
-
 import mongoose from 'mongoose';
-
 import moment from 'moment';
 
 //import model
 import AppointmentInformation from '../models/appointment';
+import PatientInformation from '../models/patient';
+
+const router = express.Router();
 
 //add appts
 router.add_appointment = ('/', (req, res, next) => {
     const currentdate = req.body.appointmentDate;
     const appointmentTimestamp = moment(currentdate, 'YYYY-MM-DD hh:mmA').unix();
-
     const appointmentInformation = new AppointmentInformation({
         patientId: req.body.patientId,
         attendees: req.body.attendees,
@@ -114,4 +110,4 @@ router.search_appointment = ('/:id', (req, res, next) => {
 });
 
 
-module.exports = router;
+export default router;
