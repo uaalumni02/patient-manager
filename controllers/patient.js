@@ -88,7 +88,15 @@ router.removePatient = ('/:id', (req, res) => {
 //update patient information
 router.updatePatient = ('/:id', (req, res) => {
     const id = req.params.patientId;
-    const updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
+    const updateOps = { 
+        name: req.body.name, 
+        email: req.body.email, 
+        phone: req.body.phone, 
+        address: req.body.address, 
+        medication: req.body.medication, 
+        diagnosis: req.body.diagnosis, 
+        additionalInfo: req.body.additionalInfo 
+    };
     PatientInformation.update({ $set: updateOps })
         .exec()
         .then(result => {
