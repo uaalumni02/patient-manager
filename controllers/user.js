@@ -100,7 +100,7 @@ router.logIn = ('/login', (req, res, next) => {
 });
 
 //delete user
-router.remove_user = ('/:id', (req, res) => {
+router.removeUser = ('/:id', (req, res) => {
     const id = req.params.id;
     User.findOneAndDelete({ '_id': id })
         .exec()

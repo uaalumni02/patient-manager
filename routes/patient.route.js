@@ -12,17 +12,17 @@ import PatientInformation from '../models/patient';
 import patientController from '../controllers/patient';
 
 //shows all data
-router.get('/', checkAuth, patientController.get_all_patients);
+router.get('/', checkAuth, patientController.getAllPatients);
 
 // Insert JSON straight into MongoDB
-router.post('/', checkAuth, patientController.add_patients);
+router.post('/', checkAuth, patientController.addPatients);
 
 //search DB by id
-router.get('/:id', checkAuth, patientController.search_patients);
+router.get('/:id', checkAuth, patientController.searchPatients);
 
 
 //remove patient from the db
-router.delete('/:id', checkAuth, patientController.remove_patient);
+router.delete('/:id', checkAuth, patientController.removePatient);
 
 
  //update patient information

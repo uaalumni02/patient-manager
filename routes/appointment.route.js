@@ -11,19 +11,19 @@ import AppointmentInformation from '../models/appointment';
 import appointmentController from '../controllers/appointment';
 
 //add appt data to db
-router.post('/', checkAuth, appointmentController.add_appointment);
+router.post('/', checkAuth, appointmentController.addAppointment);
 
 //show all appts
-router.get('/', checkAuth, appointmentController.all_appointments);
+router.get('/', checkAuth, appointmentController.allAppointments);
 
 //update appointment info
-router.patch('/:id', checkAuth, appointmentController.update_appointment_info);
+router.patch('/:id', checkAuth, appointmentController.updateAppointmentInfo);
 
 //delete appt from the DB
-router.delete('/:id', checkAuth, appointmentController.remove_appointment);
+router.delete('/:id', checkAuth, appointmentController.removeAppointment);
 
 //search appt by ID
-router.get('/:id', checkAuth, appointmentController.search_appointment);
+router.get('/:id', checkAuth, appointmentController.searchAppointment);
 
 
 

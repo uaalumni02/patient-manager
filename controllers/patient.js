@@ -5,7 +5,7 @@ import PatientInformation from '../models/patient';
 const router = express.Router();
 
 //shows all data
-router.get_all_patients = ('/', (req, res) => {
+router.getAllPatients = ('/', (req, res) => {
     PatientInformation.find()
         .exec()
         .then(docs => {
@@ -20,7 +20,7 @@ router.get_all_patients = ('/', (req, res) => {
 });
 
 // Insert JSON straight into MongoDB
-router.add_patients = ('/', (req, res, next) => {
+router.addPatients = ('/', (req, res, next) => {
     const patientInformation = new PatientInformation({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -49,7 +49,7 @@ router.add_patients = ('/', (req, res, next) => {
 });
 
 //search by ID
-router.search_patients = ('/:id', (req, res, next) => {
+router.searchPatients = ('/:id', (req, res, next) => {
     const id = req.params.id;
     PatientInformation.findById({ '_id': id })
         .exec()
@@ -69,7 +69,7 @@ router.search_patients = ('/:id', (req, res, next) => {
 });
 
 //remove patient from the db
-router.remove_patient = ('/:id', (req, res) => {
+router.removePatient = ('/:id', (req, res) => {
     const id = req.params.id;
     PatientInformation.findOneAndDelete({ '_id': id })
         .exec()
@@ -86,7 +86,7 @@ router.remove_patient = ('/:id', (req, res) => {
 });
 
 //update patient information
-router.update_patient = ('/:id', (req, res) => {
+router.updatePatient = ('/:id', (req, res) => {
     const id = req.params.patientId;
     const updateOps = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address, medication: req.body.medication, diagnosis: req.body.diagnosis, additionalInfo: req.body.additionalInfo };
     PatientInformation.update({ $set: updateOps })
