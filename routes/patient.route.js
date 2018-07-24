@@ -26,6 +26,6 @@ router.delete('/:id', checkAuth, patientController.removePatient);
 
 
  //update patient information
-router.patch('/:id', checkAuth, patientController.update_patient);
+router.patch('/:id', checkAuth, patientController.updatePatient);
 
 module.exports = router;

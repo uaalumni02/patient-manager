@@ -95,7 +95,7 @@ router.updatePatient = ('/:id', (req, res) => {
         address: req.body.address, 
         medication: req.body.medication, 
         diagnosis: req.body.diagnosis, 
-        additionalInfo: req.body.additionalInfo 
+        additionalInfo: req.body.additionalInfo, 
     };
     PatientInformation.update({ $set: updateOps })
         .exec()
