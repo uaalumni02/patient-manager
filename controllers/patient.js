@@ -1,10 +1,8 @@
-import PatientInformation from '../models/patient';
 
 import express from "express";
-
-const router = express.Router();
-
 import mongoose from 'mongoose';
+import PatientInformation from '../models/patient';
+const router = express.Router();
 
 //shows all data
 router.get_all_patients = ('/', (req, res) => {
@@ -104,6 +102,4 @@ router.update_patient = ('/:id', (req, res) => {
         });
 });
 
-
-
-module.exports = router;
+export default router;
